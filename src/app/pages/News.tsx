@@ -1,24 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {StyleSheet, Text, View, TextInput, Alert, SafeAreaView, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import Footer from "../common/Footer";
 import Header from "../common/Header";
 
-const NewForm: React.FC= () => {
+
+interface Article {
+    title: string,
+    data: string,
+    date: string
+}
+
+const New: React.FC<Article> = (props) => {
+    return(
+        <View style={styles.containerNew}>
+            <Text style={styles.title}>{props.title}</Text>
+            <Text style={styles.data}>{props.data}</Text>
+            <Text>{props.date}</Text>
+        </View>
+    )
+}
+
+const NewForm: React.FC = () => {
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
-                <Text style={styles.title}>Регистрация</Text>
-                <TextInput style={styles.textInput} placeholder={"Username*"}/>
-                <TextInput style={styles.textInput} placeholder={"Фамилия*"}/>
-                <TextInput style={styles.textInput} placeholder={"Имя*"}/>
-                <TextInput style={styles.textInput} placeholder={"Отчество*"}/>
-                <TextInput style={styles.textInput} placeholder={"E-mail*"}/>
-                <TextInput style={styles.textInput} placeholder={"Телефон*"}/>
-                <TextInput style={styles.textInput} placeholder={"Password*"}/>
-                <TouchableOpacity style={styles.button} onPress={() => Alert.alert('Simple press')}>
-                    <Text style={styles.textButton}>РЕГИСТРАЦИЯ</Text>
-                </TouchableOpacity>
+                <New data={"В эту среду Денис Макрушин снова приглашает на октрытую лекцию."}
+                     title="Открытая лекция Дениса Макрушина!" date={'13.10.2021'}/>
                 <StatusBar style="dark" />
             </View>
         </SafeAreaView>
@@ -41,7 +49,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    containerNew:{
+        width: 350,
+        height: 200,
+        justifyContent: "center",
+        alignItems: 'center',
+        borderColor: '#ffff',
+        borderWidth: 1,
+        backgroundColor: "#DBDBDB",
+        borderRadius: 10
     },
     button:{
         backgroundColor: "#ff0044",
@@ -59,14 +77,13 @@ const styles = StyleSheet.create({
         borderRadius:7,
         margin: 5,
     },
-    textButton:{
-        padding:20,
-        fontSize: 15,
-        color: "#ffff",
-        fontWeight: "bold"
+    data:{
+        fontSize: 14,
+        margin:10
     },
     title:{
+        justifyContent: "center",
         fontSize: 25,
-        margin:10
+        //margin:10
     }
 });
