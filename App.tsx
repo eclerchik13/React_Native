@@ -7,8 +7,7 @@ import {Drawer} from 'react-native-paper'
 import { Provider as PaperProvider } from 'react-native-paper';
 import { createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {NavigationContainer} from "@react-navigation/native";
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
-
+import { MaterialCommunityIcons, Ionicons ,MaterialIcons, Entypo } from '@expo/vector-icons';
 const Tab = createDrawerNavigator();
 
 const DrawerContent =({navigation})=>{
@@ -27,9 +26,16 @@ const DrawerContent =({navigation})=>{
                 />
                 <DrawerItem
                     icon={({ size }) => (
-                        <MaterialCommunityIcons name="tune" color={'#ff0044'} size={size} />
+                        <Entypo name="layers" color={'#ff0044'} size={size} />
                     )}
                     label="Работы"
+                    onPress={() => {}}
+                />
+                <DrawerItem
+                    icon={({ size }) => (
+                        <MaterialIcons name="work" color={'#ff0044'} size={size} />
+                    )}
+                    label="Вакансии"
                     onPress={() => {}}
                 />
                 <DrawerItem
