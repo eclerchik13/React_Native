@@ -80,7 +80,7 @@ const NewPage: React.FC= () =>{
     return(
         <ScrollView>
         <View style={styles.container}>
-            <Header/>
+            <Header title={"Новости"}/>
             <NewForm />
             <Footer/>
         </View>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     date:{
         alignItems: 'center',
-        position: "relative",
+        position: "relative"
         //paddingBottom: 0.5
     },
     icon:{
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     time:{
         fontSize: 14,
         marginLeft: 10,
-        marginBottom: 15,
+        marginBottom: 15
     },
     cherta:{
         borderBottomWidth: 1,
