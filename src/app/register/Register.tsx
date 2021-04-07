@@ -1,23 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import {StyleSheet, Text, View, TextInput, Alert, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import Footer from "../common/Footer";
 import Header from "../common/Header";
 
-const RegForm: React.FC= () => {
+interface RUser {
+    username: string,
+    secondname: string,
+    name: string,
+    thirdname: string,
+    email: string,
+    telephone: string,
+    password: string
+}
+
+const RegForm: React.FC= ({}) => {
+    const [registr, setRegister] = useState<RUser>({
+        username: '',
+        secondname: '',
+        name: '',
+        thirdname: '',
+        email: '',
+        telephone: "",
+        password: ''
+    })
+
+    function CreateUser() {
+        Alert.alert(JSON.stringify({username: registr.username,
+        secondname: registr.secondname,
+        name: registr.name,
+        thirdname: registr.thirdname,
+        email: registr.email,
+        telephone: registr.telephone,
+        password: registr.password}))
+    }
+
     return(
         <ScrollView>
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
                 <Text style={styles.title}>Регистрация</Text>
-                <TextInput style={styles.textInput} placeholder={"Username*"}/>
-                <TextInput style={styles.textInput} placeholder={"Фамилия*"}/>
-                <TextInput style={styles.textInput} placeholder={"Имя*"}/>
-                <TextInput style={styles.textInput} placeholder={"Отчество*"}/>
-                <TextInput style={styles.textInput} placeholder={"E-mail*"}/>
-                <TextInput style={styles.textInput} placeholder={"Телефон*"}/>
-                <TextInput style={styles.textInput} placeholder={"Password*"}/>
-                <TouchableOpacity style={styles.button} onPress={() => Alert.alert('Simple press')}>
+                <TextInput style={styles.textInput} placeholder={"Username*"}
+                    onChangeText={e =>(setRegister({...registr, username: e}))}/>
+                <TextInput style={styles.textInput} placeholder={"Фамилия*"}
+                           onChangeText={e =>(setRegister({...registr, secondname: e}))}/>
+                <TextInput style={styles.textInput} placeholder={"Имя*"}
+                           onChangeText={e =>(setRegister({...registr, name: e}))}/>
+                <TextInput style={styles.textInput} placeholder={"Отчество*"}
+                           onChangeText={e =>(setRegister({...registr, thirdname: e}))}/>
+                <TextInput style={styles.textInput} placeholder={"E-mail*"}
+                           onChangeText={e =>(setRegister({...registr, email: e}))}/>
+                <TextInput style={styles.textInput} placeholder={"Телефон*"}
+                           onChangeText={e =>(setRegister({...registr, telephone: e}))}/>
+                <TextInput style={styles.textInput} placeholder={"Password*"}
+                           onChangeText={e =>(setRegister({...registr, password: e}))}/>
+                <TouchableOpacity style={styles.button} onPress={() =>CreateUser }>
                     <Text style={styles.textButton}>РЕГИСТРАЦИЯ</Text>
                 </TouchableOpacity>
                 <StatusBar style="dark" />
@@ -31,7 +68,7 @@ const RegForm: React.FC= () => {
 const RegPage: React.FC= () =>{
     return(
         <View style={styles.container}>
-            <Header/>
+            <Header title={"Sign up"}/>
             <RegForm />
         </View>
     )

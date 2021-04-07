@@ -1,19 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TextInput, Alert, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import Footer from "../common/Footer";
 import Header from "../common/Header";
 
+interface IUser {
+    username: string,
+    password: string
+}
 
 const AuthForm: React.FC= () => {
+    const [auth, setAuth] = useState<IUser>({
+        username: '',
+        password: ''
+    })
+
+    function CreateUser() {
+        Alert.alert(JSON.stringify({username: auth.username,
+            password: auth.password}))
+    }
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
                 <Image source={require("../images/logo.png")} style={styles.logo}/>
                 <Text style={styles.title}>Авторизация</Text>
-                <TextInput style={styles.textInput} placeholder={"Username*"}/>
-                <TextInput style={styles.textInput} placeholder={"Password*"}/>
-                <TouchableOpacity style={styles.button} onPress={() => Alert.alert('Simple press')}>
+                <TextInput style={styles.textInput} placeholder={"Username*"}
+                           onChangeText={e =>(setAuth({...auth, username: e}))}/>
+                <TextInput style={styles.textInput} placeholder={"Password*"}
+                           onChangeText={e =>(setAuth({...auth, password: e}))}/>
+                <TouchableOpacity style={styles.button} onPress={() => CreateUser()}>
                     <Text style={styles.textButton}>ВОЙТИ</Text>
                 </TouchableOpacity>
                 <StatusBar style="dark" />
@@ -25,7 +40,7 @@ const AuthForm: React.FC= () => {
 const AuthPage: React.FC = () =>{
     return(
         <View style={styles.container}>
-            <Header/>
+            <Header title={"Кафедра №42"}/>
             <AuthForm />
             <Footer/>
         </View>
@@ -42,7 +57,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f4f6f8"
     },
     button:{
-        backgroundColor: "#ff0044",
+        backgroundColor: "#FF0044",
         borderRadius: 7,
         width: 300,
         margin: 10,
