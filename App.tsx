@@ -2,7 +2,9 @@ import React from 'react';
 import { StyleSheet} from "react-native";
 import AuthPage from "./src/app/auth/Authorization";
 import RegPage from "./src/app/register/Register";
-import NewPage from "./src/app/pages/News";
+import {NewPage}from "./src/app/pages/News";
+import JobPage from "./src/app/pages/Job";
+import HelpPage from "./src/app/pages/Help";
 import {Drawer} from 'react-native-paper'
 import { Provider as PaperProvider } from 'react-native-paper';
 import { createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
@@ -10,7 +12,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import { MaterialCommunityIcons, Ionicons ,MaterialIcons, Entypo } from '@expo/vector-icons';
 const Tab = createDrawerNavigator();
 
-const DrawerContent =({navigation})=>{
+const DrawerContent: React.FC<any> =({navigation})=>{
     return(
             <Drawer.Section style={styles.drawerSection} >
                 <DrawerItem
@@ -22,7 +24,7 @@ const DrawerContent =({navigation})=>{
                         />
                     )}
                     label="Новости"
-                    onPress={() => {navigation.navigate('Новости')}}
+                    onPress={() => {navigation.navigate("Новости")}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
@@ -36,7 +38,7 @@ const DrawerContent =({navigation})=>{
                         <MaterialIcons name="work" color={'#ff0044'} size={size} />
                     )}
                     label="Вакансии"
-                    onPress={() => {}}
+                    onPress={() => {navigation.navigate("Вакансии")}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
@@ -44,6 +46,13 @@ const DrawerContent =({navigation})=>{
                     )}
                     label="Настройки"
                     onPress={() => {}}
+                />
+                <DrawerItem
+                    icon={({ size }) => (
+                        <MaterialCommunityIcons name="comment-question" size={size} color="#ff0044" />
+                    )}
+                    label="Поддержка"
+                    onPress={() => {navigation.navigate("Поддержка")}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
@@ -69,6 +78,8 @@ const DabNavigation =()=>{
             <Tab.Screen name={"Вход"} component={AuthPage}/>
             <Tab.Screen name={'Регистрация'} component={RegPage}/>
             <Tab.Screen name={'Новости'} component={NewPage}/>
+            <Tab.Screen name={"Вакансии"} component={JobPage}/>
+            <Tab.Screen name={"Поддержка"} component={HelpPage}/>
         </Tab.Navigator>
     )
 }
