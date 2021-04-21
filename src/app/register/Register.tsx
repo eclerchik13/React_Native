@@ -1,38 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import {StyleSheet, Text, View, TextInput, Alert, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, Alert, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import Footer from "../common/Footer";
 import Header from "../common/Header";
+import InputField from "../common/Components";
 
 interface RUser {
     username: string,
-    secondname: string,
+    secondName: string,
     name: string,
-    thirdname: string,
+    thirdName: string,
     email: string,
     telephone: string,
     password: string
 }
 
 const RegForm: React.FC= ({}) => {
-    const [registr, setRegister] = useState<RUser>({
+    const [registration, setRegister] = useState<RUser>({
         username: '',
-        secondname: '',
+        secondName: '',
         name: '',
-        thirdname: '',
+        thirdName: '',
         email: '',
         telephone: "",
         password: ''
     })
 
     function CreateUser() {
-        Alert.alert(JSON.stringify({username: registr.username,
-        secondname: registr.secondname,
-        name: registr.name,
-        thirdname: registr.thirdname,
-        email: registr.email,
-        telephone: registr.telephone,
-        password: registr.password}))
+        Alert.alert(JSON.stringify({username: registration.username,
+        secondName: registration.secondName,
+        name: registration.name,
+        thirdName: registration.thirdName,
+        email: registration.email,
+        telephone: registration.telephone,
+        password: registration.password}))
     }
 
     return(
@@ -40,21 +41,21 @@ const RegForm: React.FC= ({}) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
                 <Text style={styles.title}>Регистрация</Text>
-                <TextInput style={styles.textInput} placeholder={"Username*"}
-                    onChangeText={e =>(setRegister({...registr, username: e}))}/>
-                <TextInput style={styles.textInput} placeholder={"Фамилия*"}
-                           onChangeText={e =>(setRegister({...registr, secondname: e}))}/>
-                <TextInput style={styles.textInput} placeholder={"Имя*"}
-                           onChangeText={e =>(setRegister({...registr, name: e}))}/>
-                <TextInput style={styles.textInput} placeholder={"Отчество*"}
-                           onChangeText={e =>(setRegister({...registr, thirdname: e}))}/>
-                <TextInput style={styles.textInput} placeholder={"E-mail*"}
-                           onChangeText={e =>(setRegister({...registr, email: e}))}/>
-                <TextInput style={styles.textInput} placeholder={"Телефон*"}
-                           onChangeText={e =>(setRegister({...registr, telephone: e}))}/>
-                <TextInput style={styles.textInput} placeholder={"Password*"}
-                           onChangeText={e =>(setRegister({...registr, password: e}))}/>
-                <TouchableOpacity style={styles.button} onPress={() =>CreateUser }>
+                <InputField argument={"Username*"}
+                            onChangeText={(e: string) =>(setRegister({...registration, username: e}))}/>
+                <InputField argument={"Фамилия*"}
+                            onChangeText={(e: string) =>(setRegister({...registration, secondName: e}))}/>
+                <InputField argument={"Имя*"}
+                            onChangeText={(e: string) =>(setRegister({...registration, name: e}))}/>
+                <InputField argument={"Отчество*"}
+                            onChangeText={(e: string) =>(setRegister({...registration, thirdName: e}))}/>
+                <InputField argument={"E-mail*"}
+                            onChangeText={(e: string) =>(setRegister({...registration, email: e}))}/>
+                <InputField argument={"Телефон*"}
+                            onChangeText={(e: string) =>(setRegister({...registration, telephone: e}))}/>
+                <InputField argument={"Password*"}
+                            onChangeText={(e: string) =>(setRegister({...registration,password: e}))}/>
+                <TouchableOpacity style={styles.button} onPress={() =>CreateUser() }>
                     <Text style={styles.textButton}>РЕГИСТРАЦИЯ</Text>
                 </TouchableOpacity>
                 <StatusBar style="dark" />
@@ -65,10 +66,11 @@ const RegForm: React.FC= ({}) => {
     )
 }
 
-const RegPage: React.FC= () =>{
+const RegPage: React.FC<any>= ({navigation}) =>{
+    const onpress = () => { navigation.openDrawer()}
     return(
         <View style={styles.container}>
-            <Header title={"Sign up"}/>
+            <Header title={"Sign up"} titletwo={''} onpress={onpress}/>
             <RegForm />
         </View>
     )
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     textInput: {
         height: 60,
         width: 300,
-        borderColor: 'gray',
+        //borderColor: 'gray',
         borderWidth: 1,
         borderRadius:7,
         margin: 5,

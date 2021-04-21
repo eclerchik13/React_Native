@@ -91,11 +91,11 @@ const NewForm: React.FC = () => {
     )
 }
 
-const JobPage: React.FC= () =>{
+const JobPage: React.FC<any>= ({navigation}) =>{
+    const onpress = () => { navigation.openDrawer()}
     return(
-
         <View style={styles.container}>
-            <Header title={"Вакансии"}/>
+            <Header title={"Вакансии"} titletwo={''} onpress={onpress}/>
             <ScrollView>
                 <NewForm />
                 <Footer/>

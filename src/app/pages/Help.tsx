@@ -89,16 +89,18 @@ const HelpForm: React.FC = () => {
     )
 }
 
-const HelpPage: React.FC= () =>{
+const HelpPage: React.FC<any>= ({navigation}) =>{
+    const onpress = () => { navigation.openDrawer()}
     return(
         <View style={styles.container}>
-            <Header title={"Поддержка"}/>
+            <Header title={"Поддержка"} titletwo={''} onpress={onpress}/>
                 <HelpForm/>
                 <Footer/>
         </View>
 
     )
 }
+
 
 export default HelpPage
 

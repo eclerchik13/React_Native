@@ -88,11 +88,11 @@ const NewForm: React.FC = () => {
     )
 }
 
-const NewPage: React.FC= () =>{
+const NewPage: React.FC<any>= ({navigation}) =>{
+    const onpress = () => { navigation.openDrawer()}
     return(
-
         <View style={styles.container}>
-            <Header title={"Новости"}/>
+            <Header title={"Новости"} titletwo={''} onpress={onpress}/>
             <ScrollView>
             <NewForm />
             <Footer/>
