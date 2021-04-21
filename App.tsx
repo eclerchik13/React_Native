@@ -10,6 +10,10 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {NavigationContainer} from "@react-navigation/native";
 import { MaterialCommunityIcons, Ionicons ,MaterialIcons, Entypo } from '@expo/vector-icons';
+import {ApplicationProvider, IconRegistry} from "@ui-kitten/components";
+import * as eva from '@eva-design/eva';
+import {EvaIconsPack} from "@ui-kitten/eva-icons";
+
 const Tab = createDrawerNavigator();
 
 const DrawerContent: React.FC<any> =({navigation})=>{
@@ -86,11 +90,16 @@ const DabNavigation =()=>{
 
 const App: React.FC = () => {
     return(
+        <>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={eva.light}>
         <PaperProvider>
             <NavigationContainer>
             <DabNavigation />
             </NavigationContainer>
         </PaperProvider>
+        </ApplicationProvider>
+        </>
     )
 }
 
