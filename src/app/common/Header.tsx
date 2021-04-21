@@ -19,7 +19,7 @@ const Text_C: React.FC<Title> = (props ) => {
 const Header: React.FC<any> = (props) => {
     return(
         <View style={styles.container}>
-            <Button style={styles.button}
+            <Button style={styles.button} appearance={'ghost'}
                     accessoryLeft={()=> <Icon name='menu-outline' style={styles.icon} fill={"white"} />}
                     onPress={props.onpress}
             />
@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
         marginTop: 17
     },
     logo:{
-        width: 80,
-        height: 48,
-        //margin: 10,
+        width: 60,
+        height: 37,
+        margin: -20
     },
     title:{
         display: "flex",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "#f4f6f8",
         fontWeight: "bold",
-        marginLeft: 10
+        marginLeft: 35
     },
     lowtitle:{
         display: "flex",
@@ -63,17 +63,15 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         fontSize: 12,
         color: "#f4f6f8",
-        marginLeft: 10
+        marginLeft: 35
     },
     button:{
         position: "relative",
-        left:10,
-        backgroundColor:"#3f51b5",
-        borderColor: "#3f51b5",
+        left:-15,
         marginRight:10
     },
     icon:{
-        width: 30,
-        height: 30,
+        width: 40,
+        height: 40,
     }
 });

@@ -70,7 +70,7 @@ const RegPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
     return(
         <View style={styles.container}>
-            <Header title={"Sign up"} titletwo={''} onpress={onpress}/>
+            <Header title={"Кафедра №42"} titletwo={"Криптология и кибербезопасность"} onpress={onpress}/>
             <RegForm />
         </View>
     )

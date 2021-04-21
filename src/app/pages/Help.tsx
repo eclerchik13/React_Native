@@ -93,7 +93,7 @@ const HelpPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
     return(
         <View style={styles.container}>
-            <Header title={"Поддержка"} titletwo={''} onpress={onpress}/>
+            <Header title={"Поддержка"} titletwo={'Кафедра №42'} onpress={onpress}/>
                 <HelpForm/>
                 <Footer/>
         </View>

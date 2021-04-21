@@ -95,7 +95,7 @@ const JobPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
     return(
         <View style={styles.container}>
-            <Header title={"Вакансии"} titletwo={''} onpress={onpress}/>
+            <Header title={"Вакансии"} titletwo={'Кафедра №42'} onpress={onpress}/>
             <ScrollView>
                 <NewForm />
                 <Footer/>

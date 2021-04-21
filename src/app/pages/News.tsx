@@ -92,7 +92,7 @@ const NewPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
     return(
         <View style={styles.container}>
-            <Header title={"Новости"} titletwo={''} onpress={onpress}/>
+            <Header title={"Новости"} titletwo={'Кафедра №42'} onpress={onpress}/>
             <ScrollView>
             <NewForm />
             <Footer/>
