@@ -1,17 +1,30 @@
 import React from 'react';
 import {Text, Image, StyleSheet, View} from 'react-native';
-
-
+import {Button, Icon} from "@ui-kitten/components";
 
 interface Title{
-    title: string
+    title: string,
+    titletwo:string
 }
 
-const Header: React.FC<Title>= (props) => {
+const Text_C: React.FC<Title> = (props ) => {
+    return(
+        <View>
+            <Text style={styles.title}>{props.title}</Text>
+            <Text style={styles.lowtitle}>{props.titletwo}</Text>
+        </View>
+    )
+}
+
+const Header: React.FC<any> = (props) => {
     return(
         <View style={styles.container}>
+            <Button style={styles.button}
+                    accessoryLeft={()=> <Icon name='menu-outline' style={styles.icon} fill={"white"} />}
+                    onPress={props.onpress}
+            />
             <Image source={require('../images/logo.png')} style={styles.logo}/>
-            <Text style={styles.title}>{props.title}</Text>
+            <Text_C title={props.title} titletwo={props.titletwo}/>
         </View>
     )
 }
@@ -43,5 +56,24 @@ const styles = StyleSheet.create({
         color: "#f4f6f8",
         fontWeight: "bold",
         marginLeft: 10
+    },
+    lowtitle:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        fontSize: 12,
+        color: "#f4f6f8",
+        marginLeft: 10
+    },
+    button:{
+        position: "relative",
+        left:10,
+        backgroundColor:"#3f51b5",
+        borderColor: "#3f51b5",
+        marginRight:10
+    },
+    icon:{
+        width: 30,
+        height: 30,
     }
 });
