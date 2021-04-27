@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet} from "react-native";
 import AuthPage from "./src/app/auth/Authorization";
 import RegPage from "./src/app/register/Register";
@@ -9,12 +9,16 @@ import {Drawer} from 'react-native-paper'
 import { Provider as PaperProvider } from 'react-native-paper';
 import { createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {NavigationContainer} from "@react-navigation/native";
+import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons, Ionicons ,MaterialIcons, Entypo } from '@expo/vector-icons';
 import {ApplicationProvider, IconRegistry} from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import {EvaIconsPack} from "@ui-kitten/eva-icons";
+import {AuthContext} from "./src/app/common/Components";
 
 const Tab = createDrawerNavigator();
+const Stack = createStackNavigator();
+
 
 const DrawerContent: React.FC<any> =({navigation})=>{
     return(
@@ -58,7 +62,14 @@ const DrawerContent: React.FC<any> =({navigation})=>{
                     label="Поддержка"
                     onPress={() => {navigation.navigate("Поддержка")}}
                 />
-                <DrawerItem
+            </Drawer.Section>
+    )
+}
+
+/*
+
+/*
+<DrawerItem
                     icon={({ size }) => (
                         <MaterialCommunityIcons name="login" color={'#ff0044'} size={size}/>
                         )}
@@ -72,10 +83,10 @@ const DrawerContent: React.FC<any> =({navigation})=>{
                 label="Регистрация"
                 onPress={() => {navigation.navigate("Регистрация")}}
             />
-            </Drawer.Section>
-    )
-}
+ */
 
+
+/*
 const DabNavigation =()=>{
     return(
         <Tab.Navigator drawerContent={(props) => <DrawerContent {...props}/>}>
@@ -86,22 +97,61 @@ const DabNavigation =()=>{
             <Tab.Screen name={"Поддержка"} component={HelpPage}/>
         </Tab.Navigator>
     )
+}*/
+
+const DabNavigation =()=> {
+    return (
+        <Tab.Navigator drawerContent={(props) => <DrawerContent {...props}/>}>
+            <Tab.Screen name={'Новости'} component={NewPage}/>
+            <Tab.Screen name={"Вакансии"} component={JobPage}/>
+            <Tab.Screen name={"Поддержка"} component={HelpPage}/>
+        </Tab.Navigator>
+    )
 }
 
 const App: React.FC = () => {
+        const [isAuth, setAuth] = useState(false)
     return(
-        <>
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={eva.light}>
-        <PaperProvider>
-            <NavigationContainer>
-            <DabNavigation />
-            </NavigationContainer>
-        </PaperProvider>
-        </ApplicationProvider>
-        </>
+
+            <AuthContext.Provider value={[isAuth,setAuth]}>
+            <IconRegistry icons={EvaIconsPack} />
+            <ApplicationProvider {...eva} theme={eva.light}>
+                <PaperProvider>
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="AuthPage" screenOptions={{headerStyle:{backgroundColor: "#3f51b5"}}}>
+                {isAuth == false ? (
+                <>
+                    <Stack.Screen name="Вход" component={AuthPage} />
+                    <Stack.Screen name="Регистрация" component={RegPage} />
+                </>
+                ): (
+                    <Stack.Screen name={'Navigation'} component={DabNavigation}/>
+                )}
+            </Stack.Navigator>
+        </NavigationContainer>
+                </PaperProvider>
+            </ApplicationProvider>
+            </AuthContext.Provider>
+
     )
 }
+
+
+/*
+const App: React.FC = () => {
+    return(
+        <>
+            <IconRegistry icons={EvaIconsPack} />
+            <ApplicationProvider {...eva} theme={eva.light}>
+                <PaperProvider>
+                    <NavigationContainer>
+                        <DabNavigation />
+                    </NavigationContainer>
+                </PaperProvider>
+            </ApplicationProvider>
+        </>
+    )
+}*/
 
 export default App
 
