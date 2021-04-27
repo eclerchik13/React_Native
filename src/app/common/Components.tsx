@@ -1,15 +1,18 @@
 import React, {useState} from "react";
 import {TextInput} from "react-native";
 
+// @ts-ignore
+const AuthContext = React.createContext();
+
 const InputField: React.FC<any> = (props) =>{
     const [styleButton, setStyle] = useState({
-        color: 'grey',
+        color: '#C0C0C0',
         border: 1
     })
     return(
         <>
             <TextInput onFocus={() => setStyle({color:'#3f51b5',border: 2})}
-                       onBlur={() => setStyle({color:'grey', border: 1})}
+                       onBlur={() => setStyle({color:'#C0C0C0', border: 1})}
                        style={{
                            borderColor: styleButton.color,
                            height: 60,
@@ -24,4 +27,4 @@ const InputField: React.FC<any> = (props) =>{
     )
 }
 
-export default InputField
+export {InputField, AuthContext}
