@@ -29,7 +29,19 @@ const Header: React.FC<any> = (props) => {
     )
 }
 
-export default Header
+const MainHeader: React.FC<any> = (props) => {
+    return(
+        <View style={styles.container}>
+            <Image source={require('../images/logo.png')} style={styles.logo_}/>
+            <Text_C title={props.title} titletwo={props.titletwo}/>
+            <Button style={styles.button} appearance={'ghost'} onPress={props.onpress} size={'tiny'} status={"control"}>
+                {props.text}
+            </Button>
+        </View>
+    )
+}
+
+export {Header, MainHeader}
 
 const styles = StyleSheet.create({
     container: {
@@ -47,6 +59,11 @@ const styles = StyleSheet.create({
         width: 60,
         height: 37,
         margin: -20
+    },
+    logo_:{
+        width:60,
+        height:37,
+        margin:-15
     },
     title:{
         display: "flex",
@@ -67,8 +84,11 @@ const styles = StyleSheet.create({
     },
     button:{
         position: "relative",
-        left:-15,
+        left:15,
         marginRight:10
+    },
+    text_:{
+        color: "white"
     },
     icon:{
         width: 40,
