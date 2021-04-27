@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
 import Footer from "../common/Footer";
-import Header from "../common/Header";
+import {Header} from "../common/Header";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 let New_One: Article =  {

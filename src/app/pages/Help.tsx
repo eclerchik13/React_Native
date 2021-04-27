@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import Footer from "../common/Footer";
-import Header from "../common/Header";
+import {Header}from "../common/Header";
 import { Foundation } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
