@@ -119,7 +119,7 @@ const App: React.FC = () => {
                 <PaperProvider>
         <NavigationContainer>
             <Stack.Navigator initialRouteName="AuthPage" screenOptions={{headerStyle:{backgroundColor: "#3f51b5"}}}>
-                {isAuth == false ? (
+                {!isAuth ? (
                 <>
                     <Stack.Screen name="Вход" component={AuthPage} />
                     <Stack.Screen name="Регистрация" component={RegPage} />
