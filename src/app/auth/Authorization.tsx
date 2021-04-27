@@ -1,9 +1,9 @@
-import React, {useState } from 'react';
-import {StyleSheet,  View,  Image, Alert, Text, SafeAreaView} from 'react-native'
+import React, {useContext, useState} from 'react';
+import {StyleSheet,  View,  Image,  Text, SafeAreaView} from 'react-native'
 import Footer from "../common/Footer";
-import Header from "../common/Header";
+import {MainHeader}from "../common/Header";
 import { Button } from 'react-native-material-ui';
-import InputField from "../common/Components";
+import {InputField, AuthContext} from "../common/Components";
 
 interface IUser {
     username: string,
@@ -11,14 +11,30 @@ interface IUser {
 }
 
 const AuthForm: React.FC= () => {
-    const [auth, setAuth] = useState<IUser>({
+
+    // @ts-ignore
+    const [isAuth, setAuth] = useContext(AuthContext)
+
+    const [log, setLog] = useState<IUser>({
         username: '',
         password: ''
     })
 
     function CreateUser() {
-        Alert.alert(JSON.stringify({username: auth.username,
-            password: auth.password}))
+            fetch('https://crudcrud.com/api/af8388bff8e242afbe480fcad65f5137/unicorns',{
+                method:"POST",
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body: JSON.stringify({username: log.username,
+                    password: log.password})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data != undefined){
+                        setAuth(true)
+                    }
+                })
     }
 
     return(
@@ -28,9 +44,9 @@ const AuthForm: React.FC= () => {
                     <Image style={styles.picture} source={require("../images/logo.png")} />
                     <Text style={styles.title}>Авторизация</Text>
                     <InputField argument={"Username*"}
-                                onChangeText={(e:string) =>(setAuth({...auth, username: e}))}/>
+                                onChangeText={(e:string) =>(setLog({...log, username: e}))}/>
                     <InputField argument={"Password*"}
-                                onChangeText={(e:string) =>(setAuth({...auth, password: e}))}/>
+                                onChangeText={(e:string) =>(setLog({...log, password: e}))}/>
                         <Button style={{container: styles.button,text: styles.textButton}} onPress={CreateUser}
                                 text={"Войти"}/>
                 </View>
@@ -40,10 +56,11 @@ const AuthForm: React.FC= () => {
 }
 
 const AuthPage: React.FC<any> = ({navigation}) =>{
-    const onpress = () => { navigation.openDrawer()}
+    const onpress = () => { navigation.navigate("Регистрация")}
+    //const onpress_ = () => {navigation.navigate("Navigation")}
     return(
         <View style={styles.container}>
-            <Header title={"Кафедра №42"} titletwo={"Криптология и кибербезопасность"} onpress={onpress}/>
+            <MainHeader title={"Кафедра №42"} titletwo={"Криптология и кибербезопасность"} onpress={onpress} text={"РЕГИСТРАЦИЯ"}/>
             <AuthForm />
             <Footer/>
         </View>
@@ -60,7 +77,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f4f6f8"
     },
     button:{
-        backgroundColor: "#FF0044",
+        backgroundColor: "#FF4D4D",
         borderRadius: 7,
         width: 300,
         margin: 10,
