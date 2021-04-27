@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {StyleSheet, Text, View, Alert, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import Footer from "../common/Footer";
-import Header from "../common/Header";
-import InputField from "../common/Components";
+import {MainHeader} from "../common/Header";
+import {InputField} from "../common/Components";
 
 interface RUser {
     username: string,
@@ -67,10 +67,10 @@ const RegForm: React.FC= ({}) => {
 }
 
 const RegPage: React.FC<any>= ({navigation}) =>{
-    const onpress = () => { navigation.openDrawer()}
+    const onpress = () => { navigation.navigate("Вход")}
     return(
         <View style={styles.container}>
-            <Header title={"Кафедра №42"} titletwo={"Криптология и кибербезопасность"} onpress={onpress}/>
+            <MainHeader title={"Кафедра №42"} titletwo={"Криптология и кибербезопасность"} onpress={onpress} text={"ВОЙТИ"}/>
             <RegForm />
         </View>
     )
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#f4f6f8"
     },
     button:{
-        backgroundColor: "#ff0044",
+        backgroundColor: "#FF4D4D",
         borderRadius: 7,
         width: 300,
         margin: 10,
