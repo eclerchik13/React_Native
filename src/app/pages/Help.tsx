@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import Footer from "../common/Footer";
 import {Header}from "../common/Header";
 import { Foundation } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import {ThemeType} from "../common/Components";
 
 interface Contacts{
     number: string,
@@ -24,44 +25,53 @@ const contact: Contacts = {
 }
 
 const Tel: React.FC = () => {
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
         <View style={styles.marg2}>
-            <Text style={styles.title_C}>Номер телефона</Text>
-            <Text>{contact.number}</Text>
+            <Text style={[styles.title_C,mainTheme.colorText]}>Номер телефона</Text>
+            <Text style={mainTheme.colorText}>{contact.number}</Text>
         </View>
     )
 }
 
 const Email:React.FC = () => {
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
         <View style={styles.marg}>
-            <Text style={styles.title_C}>Почта</Text>
-            <Text>{contact.email}</Text>
+            <Text style={[styles.title_C,mainTheme.colorText]}>Почта</Text>
+            <Text style={mainTheme.colorText}>{contact.email}</Text>
         </View>
     )
 }
 
 const Telegram:React.FC = () => {
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return (
         <View style={styles.marg3}>
-            <Text style={styles.title_C}>Telegram</Text>
-            <Text>{contact.telegram}</Text>
+            <Text style={[styles.title_C,mainTheme.colorText]}>Telegram</Text>
+            <Text style={mainTheme.colorText}>{contact.telegram}</Text>
         </View>
     )
 }
 const Contact: React.FC = () => {
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    let colorIcon = mainTheme.colorIconHelp.color.toString()
     return (
         <View style={styles.container_C}>
             <View style={styles.row}>
-                <Foundation name="telephone" size={50} color="black" />
+                <Foundation name="telephone" size={50} color={colorIcon} />
                 <Tel/>
             </View>
             <View  style={styles.row}>
-                <MaterialIcons name="local-post-office" size={50} color="black" />
+                <MaterialIcons name="local-post-office" size={50} color={colorIcon} />
                <Email/>
             </View>
             <View style={styles.row}>
-                <FontAwesome5 name="telegram-plane" size={50} color="black" />
+                <FontAwesome5 name="telegram-plane" size={50} color={colorIcon} />
                 <Telegram/>
             </View>
         </View>
@@ -69,8 +79,10 @@ const Contact: React.FC = () => {
 }
 
 const Help: React.FC = () => {
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-        <View style={styles.Htext}>
+        <View style={[styles.Htext, mainTheme.colorHtext]}>
             <Text style={styles.title}>Вам нужна наша помощь?</Text>
             <Text style={styles.minititle}>{Text_.date}</Text>
         </View>
@@ -78,8 +90,10 @@ const Help: React.FC = () => {
 }
 
 const HelpForm: React.FC = () => {
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <View>
                 <Help/>
                 <Contact/>
@@ -91,8 +105,10 @@ const HelpForm: React.FC = () => {
 
 const HelpPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <Header title={"Поддержка"} titletwo={'Кафедра №42'} onpress={onpress}/>
                 <HelpForm/>
                 <Footer/>
@@ -108,7 +124,7 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         alignItems: 'center',
-        backgroundColor: "#f4f6f8"
+        //backgroundColor: "#f4f6f8"
     },
     container_C: {
         marginBottom: 71
@@ -154,10 +170,10 @@ const styles = StyleSheet.create({
         width:300,
         height: 200,
         alignItems: "center",
-        borderColor: '#3f51b5',
+        //borderColor: '#3f51b5',
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#3f51b5",
+        //backgroundColor: "#3f51b5",
         //flexDirection: "row",
         justifyContent: "center"
     },

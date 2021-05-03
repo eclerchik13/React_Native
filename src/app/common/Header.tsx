@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, Image, StyleSheet, View} from 'react-native';
-import {Button, Icon} from "@ui-kitten/components";
+import {Button, Icon, Toggle} from "@ui-kitten/components";
+import {Theme_Web, ThemeType, themes} from "./Components";
 
 interface Title{
     title: string,
     titletwo:string
 }
 
-const Text_C: React.FC<Title> = (props ) => {
+const TextMainHeader: React.FC<Title> = (props ) => {
     return(
         <View>
             <Text style={styles.title}>{props.title}</Text>
@@ -16,27 +17,69 @@ const Text_C: React.FC<Title> = (props ) => {
     )
 }
 
-const Header: React.FC<any> = (props) => {
+const TextHeader: React.FC<Title> = (props ) => {
     return(
-        <View style={styles.container}>
-            <Button style={styles.button} appearance={'ghost'}
+        <View>
+            <Text style={styles.title_}>{props.title}</Text>
+            <Text style={styles.lowtitle_}>{props.titletwo}</Text>
+        </View>
+    )
+}
+
+const Header: React.FC<any> = (props) => {
+    // @ts-ignore
+    const [theme, setTheme] = useContext(Theme_Web)
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    function ThemeChange(){
+        if (theme == true){
+            setTheme(false)
+            setMainTheme(themes.light)
+        }
+        else {
+            setTheme(true)
+            setMainTheme(themes.dark)
+        }
+    }
+    return(
+        <View style={[mainTheme.containerMainHeader, styles.container]}>
+            <Button style={styles.button_menu} appearance={'ghost'}
                     accessoryLeft={()=> <Icon name='menu-outline' style={styles.icon} fill={"white"} />}
                     onPress={props.onpress}
             />
             <Image source={require('../images/logo.png')} style={styles.logo}/>
-            <Text_C title={props.title} titletwo={props.titletwo}/>
+            <TextHeader title={props.title} titletwo={props.titletwo}/>
+            <Toggle onChange={ThemeChange} status={"control"} checked={theme} style={styles.toggleContainer_}/>
         </View>
     )
 }
 
 const MainHeader: React.FC<any> = (props) => {
+    // @ts-ignore
+    const [theme, setTheme] = useContext(Theme_Web)
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    function ThemeChange(){
+        if (theme == true){
+            setTheme(false)
+            setMainTheme(themes.light)
+        }
+        else {
+            setTheme(true)
+            setMainTheme(themes.dark)
+        }
+    }
+    //<Image source={require('../images/logo.png')} style={styles.logo_}/>
+    // <View style={[styles.container, {backgroundColor: mainTheme.backgroundColor}]}>
     return(
-        <View style={styles.container}>
-            <Image source={require('../images/logo.png')} style={styles.logo_}/>
-            <Text_C title={props.title} titletwo={props.titletwo}/>
+        <View style={[mainTheme.containerMainHeader, styles.container]}>
+            <TextMainHeader title={props.title} titletwo={props.titletwo}/>
             <Button style={styles.button} appearance={'ghost'} onPress={props.onpress} size={'tiny'} status={"control"}>
                 {props.text}
             </Button>
+            <Toggle onChange={ThemeChange} status={"control"} checked={theme} style={styles.toggleContainer}/>
         </View>
     )
 }
@@ -46,7 +89,7 @@ export {Header, MainHeader}
 const styles = StyleSheet.create({
     container: {
         padding: 25,
-        backgroundColor:"#3f51b5",
+        //backgroundColor:"#3f51b5",
         width:420,
         height: 80,
         display: "flex",
@@ -60,11 +103,6 @@ const styles = StyleSheet.create({
         height: 37,
         margin: -20
     },
-    logo_:{
-        width:60,
-        height:37,
-        margin:-15
-    },
     title:{
         display: "flex",
         flexDirection: "row",
@@ -72,7 +110,16 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "#f4f6f8",
         fontWeight: "bold",
-        marginLeft: 35
+    },
+    title_:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        fontSize: 15,
+        color: "#f4f6f8",
+        fontWeight: "bold",
+        marginLeft: 40,
+        marginRight: 20
     },
     lowtitle:{
         display: "flex",
@@ -80,11 +127,26 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         fontSize: 12,
         color: "#f4f6f8",
-        marginLeft: 35
+        //marginLeft: 10
+    },
+    lowtitle_:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        fontSize: 12,
+        color: "#f4f6f8",
+        marginLeft: 40,
+        marginRight: 20
     },
     button:{
         position: "relative",
         left:15,
+        marginRight:20,
+        marginLeft: 80
+    },
+    button_menu:{
+        position: "relative",
+        left:-15,
         marginRight:10
     },
     text_:{
@@ -93,5 +155,16 @@ const styles = StyleSheet.create({
     icon:{
         width: 40,
         height: 40,
+    },
+    toggleContainer:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end"
+    },
+    toggleContainer_:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        marginLeft: 80
     }
 });

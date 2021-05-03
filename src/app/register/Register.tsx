@@ -1,9 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import {StyleSheet, Text, View, Alert, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, Text, View,  SafeAreaView, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import  { CheckBox} from "@ui-kitten/components";
 import Footer from "../common/Footer";
 import {MainHeader} from "../common/Header";
-import {InputField} from "../common/Components";
+import {InputField, TitleHeader, AuthContext, ThemeType, data, SelectGroup} from "../common/Components";
+
 
 interface RUser {
     username: string,
@@ -12,7 +13,9 @@ interface RUser {
     thirdName: string,
     email: string,
     telephone: string,
-    password: string
+    password: string,
+    role: boolean,
+    group: string
 }
 
 const RegForm: React.FC= ({}) => {
@@ -23,55 +26,112 @@ const RegForm: React.FC= ({}) => {
         thirdName: '',
         email: '',
         telephone: "",
-        password: ''
+        password: '',
+        role: false,
+        group:""
     })
+    // @ts-ignore
+    const [isAuth, setAuth] = useContext(AuthContext)
 
-    function CreateUser() {
-        Alert.alert(JSON.stringify({username: registration.username,
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const [Group, setGroup] = useState('')
+    const [isStudent, setStudent] = useState(false)
+
+    //@ts-ignore
+    const NotStudent:React.FC<any> = (next) => {
+       setStudent(next)
+        if (isStudent){
+            setGroup('')
+        }
+    }
+
+function CreateUser() {
+    /*
+    fetch('https://crudcrud.com/api/3665a51755b5433b9c05832ffe3f7299/registration',{
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({username: registration.username,
         secondName: registration.secondName,
         name: registration.name,
         thirdName: registration.thirdName,
         email: registration.email,
         telephone: registration.telephone,
-        password: registration.password}))
-    }
+        password: registration.password,
+        role: isStudent,
+        group: Group})
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data != undefined){
+                setAuth(true)
+            }
+        })
+}*/
 
+    setAuth(true)
+    Alert.alert(JSON.stringify({username: registration.username,
+        secondName: registration.secondName,
+        name: registration.name,
+        thirdName: registration.thirdName,
+        email: registration.email,
+        telephone: registration.telephone,
+        password: registration.password,
+        role: isStudent,
+        group: Group}))
+}
+//<CheckBox checked={registration.role} onChange={nextChecked => setRegister({...registration, role: nextChecked})} style={[styles.containerCheckBox]}>Я студент</CheckBox>
     return(
-        <ScrollView>
-        <SafeAreaView style={styles.container}>
-            <View style={styles.container}>
-                <Text style={styles.title}>Регистрация</Text>
-                <InputField argument={"Username*"}
+        <SafeAreaView >
+            <View style={[styles.container,mainTheme.backGroundColorPage]}>
+                <Text style={[styles.title, mainTheme.colorText]}>Регистрация</Text>
+                <InputField argument={"  Username*"}
                             onChangeText={(e: string) =>(setRegister({...registration, username: e}))}/>
-                <InputField argument={"Фамилия*"}
+                <InputField argument={"  Фамилия*"}
                             onChangeText={(e: string) =>(setRegister({...registration, secondName: e}))}/>
-                <InputField argument={"Имя*"}
+                <InputField argument={"  Имя*"}
                             onChangeText={(e: string) =>(setRegister({...registration, name: e}))}/>
-                <InputField argument={"Отчество*"}
+                <InputField argument={"  Отчество*"}
                             onChangeText={(e: string) =>(setRegister({...registration, thirdName: e}))}/>
-                <InputField argument={"E-mail*"}
+
+
+                <View style={styles.containerChoose}>
+                    {/*@ts-ignore */}
+                    <CheckBox checked={isStudent} onChange={nextChecked => NotStudent(nextChecked)} style={[styles.containerCheckBox]}>Я студент</CheckBox>
+                    {/*@ts-ignore <Select selectedIndex={selectedIndex} onSelect={index => (setSelectedIndex(index))}*/}
+                {isStudent == true && <SelectGroup  onSelect={item => setGroup(data[item.row])} value={Group}/>}
+                </View>
+
+
+                <InputField argument={"  E-mail*"}
                             onChangeText={(e: string) =>(setRegister({...registration, email: e}))}/>
-                <InputField argument={"Телефон*"}
+                <InputField argument={"  Телефон*"}
                             onChangeText={(e: string) =>(setRegister({...registration, telephone: e}))}/>
-                <InputField argument={"Password*"}
+                <InputField argument={"  Password*"}
                             onChangeText={(e: string) =>(setRegister({...registration,password: e}))}/>
                 <TouchableOpacity style={styles.button} onPress={() =>CreateUser() }>
                     <Text style={styles.textButton}>РЕГИСТРАЦИЯ</Text>
                 </TouchableOpacity>
-                <StatusBar style="dark" />
             </View>
-            <Footer/>
         </SafeAreaView>
-        </ScrollView>
     )
 }
 
+//style={[styles.container,mainTheme.backGroundColorPage]}
+
 const RegPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.navigate("Вход")}
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-        <View style={styles.container}>
-            <MainHeader title={"Кафедра №42"} titletwo={"Криптология и кибербезопасность"} onpress={onpress} text={"ВОЙТИ"}/>
+        <View style={[styles.MainContainer, mainTheme.backGroundColorPage]}>
+            <MainHeader title={"Кафедра №42"} titletwo={TitleHeader.title} onpress={onpress} text={"ВОЙТИ"}/>
+            <ScrollView >
             <RegForm />
+            <Footer/>
+            </ScrollView >
         </View>
     )
 }
@@ -80,10 +140,17 @@ export default RegPage
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        display: "flex",
+        flexDirection:"column",
         justifyContent: "center",
         alignItems: 'center',
-        backgroundColor: "#f4f6f8"
+    },
+    containerChoose:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: 270
+        //alignItems: "flex-start"
     },
     button:{
         backgroundColor: "#FF4D4D",
@@ -110,5 +177,20 @@ const styles = StyleSheet.create({
     title:{
         fontSize: 25,
         margin:10
+    },
+    containerCheckBox:{
+        marginTop: 20,
+        marginBottom: 20,
+        color: 'white'
+        //marginLeft: -90
+        //display: "flex",
+        //flexDirection: "row",
+        //justifyContent: "flex-start",
+        //alignItems: "center",
+    },
+    MainContainer:{
+        display: "flex",
+        flexDirection:"column",
+        justifyContent: "center",
     }
 });

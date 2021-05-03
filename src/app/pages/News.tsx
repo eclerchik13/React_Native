@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
 import Footer from "../common/Footer";
 import {Header} from "../common/Header";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {ThemeType} from "../common/Components";
 
 let New_One: Article =  {
     data: "В среду Денис Макрушин снова приглашает на открытую лекцию.\n" +
@@ -52,31 +53,37 @@ interface Time{
 }
 
 const ITime: React.FC<Time> = (props) =>{
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    let stringColor = mainTheme.colorIconTime.color.toString()
     return(
         <View style={styles.time}>
-            <Text ><MaterialCommunityIcons name="clock-time-two-outline" size={24} color="#5622b6"/></Text>
-            <Text style={styles.date}>{props.date}</Text>
+            <Text ><MaterialCommunityIcons name="clock-time-two-outline" size={24} color={stringColor}/></Text>
+            <Text style={[styles.date, mainTheme.colorText]}>{props.date}</Text>
         </View>
     )
 }
 
 const New: React.FC<Article> = (props) => {
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-        <View style={styles.containerNew}>
-            <View style={styles.cherta}>
-            <Text style={styles.title}>{props.title}</Text>
+        <View style={[styles.containerNew, mainTheme.colorContainerNew]}>
+            <View style={[styles.cherta,mainTheme.colorCherta]}>
+            <Text style={[styles.title, mainTheme.colorText]}>{props.title}</Text>
             </View>
-            <Text style={styles.data}>{props.data}</Text>
-            <View style={styles.cherta}/>
+            <Text style={[styles.data, mainTheme.colorText]}>{props.data}</Text>
+            <View style={[styles.cherta,mainTheme.colorCherta]}/>
             <ITime date={props.date}/>
         </View>
     )
 }
 
 const NewForm: React.FC = () => {
+    //  @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <View>
                 <New data={New_One.data}
                      title={New_One.title} date={New_One.date}/>
@@ -90,8 +97,10 @@ const NewForm: React.FC = () => {
 
 const NewPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
+    //  @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <Header title={"Новости"} titletwo={'Кафедра №42'} onpress={onpress}/>
             <ScrollView>
             <NewForm />
@@ -108,13 +117,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: 'center',
-        backgroundColor: "#f4f6f8"
+        alignItems: 'center'
     },
     containerNew:{
-        borderColor: '#fafafa',
         borderWidth: 1,
-        backgroundColor: "#fafafa",
         borderRadius: 10,
         shadowOffset: {
             width: 0,
@@ -152,7 +158,6 @@ const styles = StyleSheet.create({
     date:{
         alignItems: 'center',
         position: "relative",
-        //color: "#5623B6",
         fontWeight: "bold",
         marginLeft: 7
     },
@@ -170,7 +175,6 @@ const styles = StyleSheet.create({
         marginTop: 7
     },
     cherta:{
-        borderBottomWidth: 1,
-        borderBottomColor: "#dbdbdb"
+        borderBottomWidth: 1
     }
 });

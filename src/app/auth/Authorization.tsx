@@ -3,7 +3,7 @@ import {StyleSheet,  View,  Image,  Text, SafeAreaView} from 'react-native'
 import Footer from "../common/Footer";
 import {MainHeader}from "../common/Header";
 import { Button } from 'react-native-material-ui';
-import {InputField, AuthContext} from "../common/Components";
+import {InputField, AuthContext, TitleHeader, ThemeType} from "../common/Components";
 
 interface IUser {
     username: string,
@@ -14,6 +14,10 @@ const AuthForm: React.FC= () => {
 
     // @ts-ignore
     const [isAuth, setAuth] = useContext(AuthContext)
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [msg, setMsg] = useState("")
 
     const [log, setLog] = useState<IUser>({
         username: '',
@@ -21,7 +25,7 @@ const AuthForm: React.FC= () => {
     })
 
     function CreateUser() {
-            fetch('https://crudcrud.com/api/af8388bff8e242afbe480fcad65f5137/unicorns',{
+            /*fetch('https://crudcrud.com/api/3665a51755b5433b9c05832ffe3f7299/unicorns',{
                 method:"POST",
                 headers:{
                     'Content-Type':'application/json',
@@ -31,24 +35,30 @@ const AuthForm: React.FC= () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data != undefined){
+                    if (data.id == 0){
+                    //if (data != undefined){
                         setAuth(true)
                     }
-                })
+                    else{
+                        setMsg("You are not registered!")
+                    }
+                })*/
+        setMsg("You are not registered!")
     }
 
     return(
-        <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
+        <SafeAreaView style={[styles.container, mainTheme.backGroundColorPage]}>
+        <View style={[styles.container, mainTheme.backGroundColorPage]}>
                 <View style={styles.paper}>
                     <Image style={styles.picture} source={require("../images/logo.png")} />
-                    <Text style={styles.title}>Авторизация</Text>
-                    <InputField argument={"Username*"}
+                    <Text style={[styles.title, mainTheme.colorText]}>Авторизация</Text>
+                    <InputField argument={"  Username*"}
                                 onChangeText={(e:string) =>(setLog({...log, username: e}))}/>
-                    <InputField argument={"Password*"}
+                    <InputField argument={"  Password*"}
                                 onChangeText={(e:string) =>(setLog({...log, password: e}))}/>
                         <Button style={{container: styles.button,text: styles.textButton}} onPress={CreateUser}
                                 text={"Войти"}/>
+                    <Text style={styles.error_msg}>{msg}</Text>
                 </View>
             </View>
         </SafeAreaView>
@@ -56,11 +66,12 @@ const AuthForm: React.FC= () => {
 }
 
 const AuthPage: React.FC<any> = ({navigation}) =>{
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     const onpress = () => { navigation.navigate("Регистрация")}
-    //const onpress_ = () => {navigation.navigate("Navigation")}
     return(
-        <View style={styles.container}>
-            <MainHeader title={"Кафедра №42"} titletwo={"Криптология и кибербезопасность"} onpress={onpress} text={"РЕГИСТРАЦИЯ"}/>
+        <View style={[styles.container, mainTheme.backGroundColorPage]}>
+            <MainHeader title={"Кафедра №42"} titletwo={TitleHeader.title} onpress={onpress} text={"РЕГИСТРАЦИЯ"}/>
             <AuthForm />
             <Footer/>
         </View>
@@ -74,7 +85,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: 'center',
-        backgroundColor: "#f4f6f8"
+        //backgroundColor: "#f4f6f8"
     },
     button:{
         backgroundColor: "#FF4D4D",
@@ -125,7 +136,10 @@ const styles = StyleSheet.create({
     },
     textButtonReg:{
         color: "#f4f6f8"
-    }
+    },
+    error_msg:{
+        color: "#FF4D4D"
+}
 });
 
 /*

@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
 import Footer from "../common/Footer";
 import {Header} from "../common/Header";
 import { ITime} from "./News"
+import {ThemeType} from "../common/Components";
 
 let Job_One: Vacancy =  {
     data: "В среду Денис Макрушин снова приглашает на открытую лекцию.\n" +
@@ -65,21 +66,24 @@ interface Vacancy {
 
 
 const Job: React.FC<Vacancy> = (props) => {
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-        <View style={styles.containerNew}>
-            <Text style={styles.title}>{props.title}</Text>
+        <View style={[styles.containerNew, mainTheme.colorContainerNew]}>
+            <Text style={[styles.title, mainTheme.colorText]}>{props.title}</Text>
             <Text style={styles.shortInformation}>{props.shortInformation}</Text>
-            <Text style={styles.data}>{props.data}</Text>
-            <View style={styles.cherta}/>
+            <Text style={[styles.data, mainTheme.colorText]}>{props.data}</Text>
+            <View style={[styles.cherta, mainTheme.colorCherta]}/>
             <ITime date={props.date}/>
         </View>
     )
 }
 
 const NewForm: React.FC = () => {
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     return(
-
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <View>
                 <Job data={Job_One.data}
                      title={Job_One.title} date={Job_One.date} shortInformation={Job_One.shortInformation}/>
@@ -92,9 +96,11 @@ const NewForm: React.FC = () => {
 }
 
 const JobPage: React.FC<any>= ({navigation}) =>{
+    // @ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
     const onpress = () => { navigation.openDrawer()}
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <Header title={"Вакансии"} titletwo={'Кафедра №42'} onpress={onpress}/>
             <ScrollView>
                 <NewForm />
@@ -111,13 +117,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: 'center',
-        backgroundColor: "#f4f6f8"
+        alignItems: 'center'
     },
     containerNew:{
-        borderColor: '#fafafa',
         borderWidth: 1,
-        backgroundColor: "#fafafa",
         borderRadius: 10,
         shadowOffset: {
             width: 0,
@@ -155,7 +158,6 @@ const styles = StyleSheet.create({
     date:{
         alignItems: 'center',
         position: "relative",
-        //color: "#5623B6",
         fontWeight: "bold",
         marginLeft: 7
     },
@@ -173,8 +175,7 @@ const styles = StyleSheet.create({
         marginTop: 7
     },
     cherta:{
-        borderBottomWidth: 1,
-        borderBottomColor: "#dbdbdb"
+        borderBottomWidth: 1
     },
     shortInformation: {
         color: "grey",

@@ -1,72 +1,72 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { StyleSheet} from "react-native";
 import AuthPage from "./src/app/auth/Authorization";
 import RegPage from "./src/app/register/Register";
 import {NewPage}from "./src/app/pages/News";
 import JobPage from "./src/app/pages/Job";
 import HelpPage from "./src/app/pages/Help";
-import {Drawer} from 'react-native-paper'
+import { Drawer} from 'react-native-paper'
 import { Provider as PaperProvider } from 'react-native-paper';
 import { createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
-import {NavigationContainer} from "@react-navigation/native";
+import { NavigationContainer} from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons, Ionicons ,MaterialIcons, Entypo } from '@expo/vector-icons';
 import {ApplicationProvider, IconRegistry} from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import {EvaIconsPack} from "@ui-kitten/eva-icons";
-import {AuthContext} from "./src/app/common/Components";
-
+import {AuthContext, Theme_Web, ThemeType,themes} from "./src/app/common/Components";
 const Tab = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 
 const DrawerContent: React.FC<any> =({navigation})=>{
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    let colorIcon = mainTheme.colorIconDrawerSection.color.toString()
     return(
-            <Drawer.Section style={styles.drawerSection} >
+            <Drawer.Section style={[styles.drawerSection, mainTheme.colorDrawerSection]}>
                 <DrawerItem
                     icon={({ size }) => (
                         <MaterialCommunityIcons
                             name="home"
-                            color={'#ff0044'}
+                            color={colorIcon}
                             size={size}
                         />
                     )}
-                    label="Новости"
+                    label="Новости" labelStyle={mainTheme.colorText}
                     onPress={() => {navigation.navigate("Новости")}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
-                        <Entypo name="layers" color={'#ff0044'} size={size} />
+                        <Entypo name="layers" color={colorIcon} size={size} />
                     )}
-                    label="Работы"
+                    label="Работы" labelStyle={mainTheme.colorText}
                     onPress={() => {}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
-                        <MaterialIcons name="work" color={'#ff0044'} size={size} />
+                        <MaterialIcons name="work" color={colorIcon} size={size} />
                     )}
-                    label="Вакансии"
+                    label="Вакансии" labelStyle={mainTheme.colorText}
                     onPress={() => {navigation.navigate("Вакансии")}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
-                        <Ionicons name="settings-sharp" color={'#ff0044'} size={size} />
+                        <Ionicons name="settings-sharp" color={colorIcon} size={size} />
                     )}
-                    label="Настройки"
+                    label="Настройки" labelStyle={mainTheme.colorText}
                     onPress={() => {}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
-                        <MaterialCommunityIcons name="comment-question" size={size} color="#ff0044" />
+                        <MaterialCommunityIcons name="comment-question" size={size} color={colorIcon} />
                     )}
-                    label="Поддержка"
+                    label="Поддержка" labelStyle={mainTheme.colorText}
                     onPress={() => {navigation.navigate("Поддержка")}}
                 />
             </Drawer.Section>
     )
 }
-
-/*
 
 /*
 <DrawerItem
@@ -110,15 +110,28 @@ const DabNavigation =()=> {
 }
 
 const App: React.FC = () => {
-        const [isAuth, setAuth] = useState(false)
-    return(
+    const [isAuth, setAuth] = useState()
+    const [theme, setTheme] = useState(false)
+    const [mainTheme, setMainTheme] = useState(themes.light)
+    //<NavigationContainer theme={theme == false ? DefaultTheme : DarkTheme}>
+    //<ApplicationProvider {...eva} theme={theme == false ? eva.light : eva.dark}> after iconregistry
+    // @ts-ignore
 
+    // @ts-ignore
+    // @ts-ignore
+    return(
+            <Theme_Web.Provider value={[theme,setTheme]}>
+                {/*@ts-ignore*/}
+                <ThemeType.Provider value={[mainTheme, setMainTheme]}>
             <AuthContext.Provider value={[isAuth,setAuth]}>
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={eva.light}>
                 <PaperProvider>
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="AuthPage" screenOptions={{headerStyle:{backgroundColor: "#3f51b5"}}}>
+        <NavigationContainer >
+            <Stack.Navigator initialRouteName="AuthPage" screenOptions={{
+                headerStyle:{backgroundColor: "#3f51b5"},
+                headerShown: false
+            }}>
                 {!isAuth ? (
                 <>
                     <Stack.Screen name="Вход" component={AuthPage} />
@@ -132,6 +145,9 @@ const App: React.FC = () => {
                 </PaperProvider>
             </ApplicationProvider>
             </AuthContext.Provider>
+                </ThemeType.Provider>
+            </Theme_Web.Provider>
+
 
     )
 }
@@ -164,7 +180,7 @@ const styles = StyleSheet.create({
     drawerSection: {
         flex: 1,
         justifyContent: "center",
-        marginTop: 5
+        marginTop: 5,
     }
 });
 
