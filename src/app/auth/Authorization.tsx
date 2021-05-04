@@ -23,8 +23,10 @@ const AuthForm: React.FC= () => {
         username: '',
         password: ''
     })
-
     function CreateUser() {
+        if (log.password === '' || log.username === ''){
+            setMsg("You must fill all fields!")
+        }else{
             /*fetch('https://crudcrud.com/api/3665a51755b5433b9c05832ffe3f7299/unicorns',{
                 method:"POST",
                 headers:{
@@ -38,13 +40,14 @@ const AuthForm: React.FC= () => {
                     if (data.id == 0){
                     //if (data != undefined){
                         setAuth(true)
+                        setMsg('')
                     }
                     else{
                         setMsg("You are not registered!")
                     }
-                })*/
+                })}*/
         setMsg("You are not registered!")
-    }
+    }}
 
     return(
         <SafeAreaView style={[styles.container, mainTheme.backGroundColorPage]}>
@@ -52,11 +55,11 @@ const AuthForm: React.FC= () => {
                 <View style={styles.paper}>
                     <Image style={styles.picture} source={require("../images/logo.png")} />
                     <Text style={[styles.title, mainTheme.colorText]}>Авторизация</Text>
-                    <InputField argument={"  Username*"}
+                    <InputField argument={"  Username*"} pas={false}
                                 onChangeText={(e:string) =>(setLog({...log, username: e}))}/>
-                    <InputField argument={"  Password*"}
+                    <InputField argument={"  Password*"} pas={true}
                                 onChangeText={(e:string) =>(setLog({...log, password: e}))}/>
-                        <Button style={{container: styles.button,text: styles.textButton}} onPress={CreateUser}
+                        <Button style={{container: [styles.button, mainTheme.colorButton],text: styles.textButton}} onPress={CreateUser}
                                 text={"Войти"}/>
                     <Text style={styles.error_msg}>{msg}</Text>
                 </View>
@@ -84,11 +87,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: 'center',
-        //backgroundColor: "#f4f6f8"
+        alignItems: 'center'
     },
     button:{
-        backgroundColor: "#FF4D4D",
+        //backgroundColor: "#FF4D4D",
         borderRadius: 7,
         width: 300,
         margin: 10,
@@ -123,7 +125,6 @@ const styles = StyleSheet.create({
         //right: '10px'
     },
     paper: {
-        //margin: theme.spacing(12, 4),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -141,32 +142,3 @@ const styles = StyleSheet.create({
         color: "#FF4D4D"
 }
 });
-
-/*
-<SafeAreaView style={styles.container}>
-            <View style={styles.container}>
-                <Image source={require("../images/logo.png")} style={styles.logo}/>
-                <Text style={styles.title}>Авторизация</Text>
-                <TextInput style={styles.textInput} placeholder={"Username*"}
-                           onChangeText={e =>(setAuth({...auth, username: e}))}/>
-                <TextInput style={styles.textInput} placeholder={"Password*"}
-                           onChangeText={e =>(setAuth({...auth, password: e}))}/>
-                <TouchableOpacity style={styles.button} onPress={() => CreateUser()}>
-                    <Text style={styles.textButton}>ВОЙТИ</Text>
-                </TouchableOpacity>
-                <StatusBar style="dark" />
-            </View>
-        </SafeAreaView>*/
-/*
-
-<Image source={require("../images/logo.png")}/>
-                        <Text>
-                            Кафедра №42
-                        </Text>
-                        <Text>
-                            Криптология и кибербезопасность
-                        </Text>
-<View style={styles.right}>
-                        <Button  style={{container: styles.buttonContainer, text: styles.textButtonReg}} text="Регистрация" />
-                    </View>
-*/
