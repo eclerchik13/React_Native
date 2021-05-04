@@ -14,25 +14,6 @@ const data = [
     "Б19-565"
 ];
 
-const SelectGroup: React.FC<any> = (props) => {
-
-    const renderOption = (title: string) => (
-        <SelectItem title={title}/>
-    );
-    return(
-        <Select  placeholder={"Группы"} onSelect={props.onSelect}
-                 style={{
-                         width: 150,
-                         marginTop: 10
-                     }}
-                 value={props.value} >
-            {data.map(renderOption)}
-        </Select>
-    )
-}
-
-
-
 const dark = StyleSheet.create({
     containerMainHeader: {
         backgroundColor:"#424242"
@@ -71,6 +52,15 @@ const dark = StyleSheet.create({
     colorHtext:{
         borderColor: '#424242',
         backgroundColor: "#424242"
+    },
+    colorButton:{
+        backgroundColor: '#8A85FF'
+    },
+    colorForCheckBox:{
+        color: "#8A85FF"
+    },
+    selectionColor:{
+        color: '#ffffff'
     }
 });
 
@@ -112,6 +102,15 @@ const light = StyleSheet.create({
     colorHtext:{
         borderColor: '#3f51b5',
         backgroundColor: "#3f51b5"
+    },
+    colorButton:{
+        backgroundColor: "#FF4D4D"
+    },
+    colorForCheckBox: {
+        color: "#FF4D4D"
+    },
+    selectionColor:{
+        color: '#000000'
     }
 });
 
@@ -119,6 +118,25 @@ const themes = {light, dark}
 
 //@ts-ignore
 const ThemeType = React.createContext(themes.light)
+
+const SelectGroup: React.FC<any> = (props) => {
+    //@ts-ignore
+    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const renderOption = (title: string) => (
+        <SelectItem title={title} key={title}/>
+    );
+    return(
+        <Select  placeholder={"Группы"} onSelect={props.onSelect}
+                 style={{
+                         width: 150,
+                         marginTop: 10
+                     }}
+                status={"basic"}
+                 value={props.value} >
+            {data.map(renderOption)}
+        </Select>
+    )
+}
 
 interface ITitleHeader {
     title: string
@@ -135,7 +153,7 @@ const InputField: React.FC<any> = (props) =>{
     })
     // @ts-ignore
     const [mainTheme, setMainTheme] = useContext(ThemeType)
-
+    let color: string = mainTheme.selectionColor.color.toString()
     return(
         <>
             <TextInput onFocus={() => setStyle({color:'#3f51b5',border: 2})}
@@ -147,8 +165,15 @@ const InputField: React.FC<any> = (props) =>{
                            borderWidth: styleButton.border,
                            borderRadius:7,
                            margin: 5,
-                       }} placeholder={props.argument} placeholderTextColor={mainTheme.placeholderColor.color}
-                       onChangeText={props.onChangeText}/>
+                           color: mainTheme.colorText.color
+                       }} placeholder={props.argument}
+                       placeholderTextColor={mainTheme.placeholderColor.color}
+                       selectionColor={color}
+                       textAlign={"center"}
+                       clearButtonMode={"always"}
+                       secureTextEntry={props.pas} showSoftInputOnFocus={props.pas}
+                       onChangeText={props.onChangeText}
+            />
         </>
     )
 }
