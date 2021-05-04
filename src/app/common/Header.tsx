@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Text, Image, StyleSheet, View} from 'react-native';
 import {Button, Icon, Toggle} from "@ui-kitten/components";
-import {Theme_Web, ThemeType, themes} from "./Components";
+import {Theme_Web, ThemeType, themes, AuthContext} from "./Components";
 
 interface Title{
     title: string,
@@ -31,7 +31,8 @@ const Header: React.FC<any> = (props) => {
     const [theme, setTheme] = useContext(Theme_Web)
     // @ts-ignore
     const [mainTheme, setMainTheme] = useContext(ThemeType)
-
+    // @ts-ignore
+    const [isAuth, setAuth] = useContext(AuthContext)
     function ThemeChange(){
         if (theme == true){
             setTheme(false)
@@ -51,6 +52,10 @@ const Header: React.FC<any> = (props) => {
             <Image source={require('../images/logo.png')} style={styles.logo}/>
             <TextHeader title={props.title} titletwo={props.titletwo}/>
             <Toggle onChange={ThemeChange} status={"control"} checked={theme} style={styles.toggleContainer_}/>
+            <Button style={styles.iconOut} appearance={'ghost'}
+                    accessoryLeft={()=> <Icon name='log-out-outline' style={styles.icon} fill={"white"} />}
+                    onPress={()=> setAuth(false)}
+            />
         </View>
     )
 }
@@ -136,7 +141,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "#f4f6f8",
         marginLeft: 40,
-        marginRight: 20
+        marginRight: 25
     },
     button:{
         position: "relative",
@@ -164,7 +169,13 @@ const styles = StyleSheet.create({
     toggleContainer_:{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-end",
-        marginLeft: 80
+        justifyContent: "space-between",
+        marginLeft: 40
+    },
+    iconOut:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+       // marginLeft: 50
     }
 });

@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: "center",
         alignItems: 'center',
-        margin: 10
+        margin: 10,
+        display: "flex",
+        flexDirection: "column"
     },
     text: {
         textAlign: "center"
