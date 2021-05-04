@@ -5,6 +5,7 @@ import RegPage from "./src/app/register/Register";
 import {NewPage}from "./src/app/pages/News";
 import JobPage from "./src/app/pages/Job";
 import HelpPage from "./src/app/pages/Help";
+import SettingPage from "./src/app/pages/Settings";
 import { Drawer} from 'react-native-paper'
 import { Provider as PaperProvider } from 'react-native-paper';
 import { createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
@@ -14,7 +15,7 @@ import { MaterialCommunityIcons, Ionicons ,MaterialIcons, Entypo } from '@expo/v
 import {ApplicationProvider, IconRegistry} from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 import {EvaIconsPack} from "@ui-kitten/eva-icons";
-import {AuthContext, Theme_Web, ThemeType,themes} from "./src/app/common/Components";
+import {AuthContext, Theme_Web, ThemeType, themes} from "./src/app/common/Components";
 const Tab = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -55,7 +56,7 @@ const DrawerContent: React.FC<any> =({navigation})=>{
                         <Ionicons name="settings-sharp" color={colorIcon} size={size} />
                     )}
                     label="Настройки" labelStyle={mainTheme.colorText}
-                    onPress={() => {}}
+                    onPress={() => {navigation.navigate("Настройки")}}
                 />
                 <DrawerItem
                     icon={({ size }) => (
@@ -105,6 +106,7 @@ const DabNavigation =()=> {
             <Tab.Screen name={'Новости'} component={NewPage}/>
             <Tab.Screen name={"Вакансии"} component={JobPage}/>
             <Tab.Screen name={"Поддержка"} component={HelpPage}/>
+            <Tab.Screen name={"Настройки"} component={SettingPage}/>
         </Tab.Navigator>
     )
 }
@@ -113,11 +115,8 @@ const App: React.FC = () => {
     const [isAuth, setAuth] = useState()
     const [theme, setTheme] = useState(false)
     const [mainTheme, setMainTheme] = useState(themes.light)
-    //<NavigationContainer theme={theme == false ? DefaultTheme : DarkTheme}>
-    //<ApplicationProvider {...eva} theme={theme == false ? eva.light : eva.dark}> after iconregistry
     // @ts-ignore
 
-    // @ts-ignore
     // @ts-ignore
     return(
             <Theme_Web.Provider value={[theme,setTheme]}>
@@ -147,8 +146,6 @@ const App: React.FC = () => {
             </AuthContext.Provider>
                 </ThemeType.Provider>
             </Theme_Web.Provider>
-
-
     )
 }
 
