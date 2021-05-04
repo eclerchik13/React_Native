@@ -122,9 +122,9 @@ export default HelpPage
 
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
-        alignItems: 'center',
-        //backgroundColor: "#f4f6f8"
+        flex: 1,
+        justifyContent: "center",
+        alignItems: 'center'
     },
     container_C: {
         marginBottom: 71
