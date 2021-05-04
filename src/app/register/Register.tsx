@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, View,  SafeAreaView, TouchableOpacity, ScrollView, Alert} from 'react-native';
-import  { CheckBox} from "@ui-kitten/components";
+//import  { CheckBox} from "@ui-kitten/components";
 import Footer from "../common/Footer";
 import {MainHeader} from "../common/Header";
 import {InputField, TitleHeader, AuthContext, ThemeType, data, SelectGroup} from "../common/Components";
-
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 interface RUser {
     username: string,
@@ -37,16 +37,28 @@ const RegForm: React.FC= ({}) => {
     const [mainTheme, setMainTheme] = useContext(ThemeType)
     const [Group, setGroup] = useState('')
     const [isStudent, setStudent] = useState(false)
+    const [msg, setMsg] = useState("")
 
     //@ts-ignore
-    const NotStudent:React.FC<any> = (next) => {
-       setStudent(next)
+    const NotStudent:React.FC = () => {
+       setStudent(!isStudent)
         if (isStudent){
             setGroup('')
         }
     }
 
 function CreateUser() {
+        if( registration.email === '' ||
+        registration.name === '' ||
+        registration.password === '' ||
+        registration.secondName === '' ||
+        registration.thirdName === '' ||
+        registration.username === '' ||
+        registration.telephone === ''){
+            setMsg("You must fill all fields!")
+            setAuth(true) // for quick work
+        }else{
+
     /*
     fetch('https://crudcrud.com/api/3665a51755b5433b9c05832ffe3f7299/registration',{
         method:"POST",
@@ -81,45 +93,49 @@ function CreateUser() {
         password: registration.password,
         role: isStudent,
         group: Group}))
-}
-//<CheckBox checked={registration.role} onChange={nextChecked => setRegister({...registration, role: nextChecked})} style={[styles.containerCheckBox]}>Я студент</CheckBox>
+}}
+let color: string= mainTheme.colorForCheckBox.color
+
     return(
-        <SafeAreaView >
+        <SafeAreaView  >
             <View style={[styles.container,mainTheme.backGroundColorPage]}>
                 <Text style={[styles.title, mainTheme.colorText]}>Регистрация</Text>
-                <InputField argument={"  Username*"}
+                <InputField argument={"  Username*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, username: e}))}/>
-                <InputField argument={"  Фамилия*"}
+                <InputField argument={"  Фамилия*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, secondName: e}))}/>
-                <InputField argument={"  Имя*"}
+                <InputField argument={"  Имя*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, name: e}))}/>
-                <InputField argument={"  Отчество*"}
+                <InputField argument={"  Отчество*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, thirdName: e}))}/>
 
-
                 <View style={styles.containerChoose}>
-                    {/*@ts-ignore */}
-                    <CheckBox checked={isStudent} onChange={nextChecked => NotStudent(nextChecked)} style={[styles.containerCheckBox]}>Я студент</CheckBox>
-                    {/*@ts-ignore <Select selectedIndex={selectedIndex} onSelect={index => (setSelectedIndex(index))}*/}
-                {isStudent == true && <SelectGroup  onSelect={item => setGroup(data[item.row])} value={Group}/>}
+                    {/*@ts-ignore*/}
+                    <BouncyCheckbox  isChecked={isStudent} onPress={()=> NotStudent()}
+                                    text={"Я студент"}
+                                    textStyle={[mainTheme.colorText.color,{textDecorationLine: "none"}]}
+                                    style={styles.containerCheckBox}
+                                     iconStyle={{ borderColor: color }}
+                                     fillColor={color}/>
+
+                    {/*@ts-ignore*/}
+                {isStudent == true && <SelectGroup onSelect={item => setGroup(data[item.row])} value={Group}/>}
                 </View>
 
-
-                <InputField argument={"  E-mail*"}
+                <InputField argument={"  E-mail*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, email: e}))}/>
-                <InputField argument={"  Телефон*"}
+                <InputField argument={"  Телефон*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, telephone: e}))}/>
-                <InputField argument={"  Password*"}
+                <InputField argument={"  Password*"} pas={true}
                             onChangeText={(e: string) =>(setRegister({...registration,password: e}))}/>
-                <TouchableOpacity style={styles.button} onPress={() =>CreateUser() }>
-                    <Text style={styles.textButton}>РЕГИСТРАЦИЯ</Text>
+                <TouchableOpacity style={[styles.button, mainTheme.colorButton]} onPress={() =>CreateUser() }>
+                    <Text style={[styles.textButton]}>РЕГИСТРАЦИЯ</Text>
                 </TouchableOpacity>
+                <Text style={styles.error_msg}>{msg}</Text>
             </View>
         </SafeAreaView>
     )
 }
-
-//style={[styles.container,mainTheme.backGroundColorPage]}
 
 const RegPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.navigate("Вход")}
@@ -128,7 +144,7 @@ const RegPage: React.FC<any>= ({navigation}) =>{
     return(
         <View style={[styles.MainContainer, mainTheme.backGroundColorPage]}>
             <MainHeader title={"Кафедра №42"} titletwo={TitleHeader.title} onpress={onpress} text={"ВОЙТИ"}/>
-            <ScrollView >
+            <ScrollView>
             <RegForm />
             <Footer/>
             </ScrollView >
@@ -149,11 +165,9 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        width: 270
-        //alignItems: "flex-start"
+        width: 300
     },
     button:{
-        backgroundColor: "#FF4D4D",
         borderRadius: 7,
         width: 300,
         margin: 10,
@@ -163,7 +177,6 @@ const styles = StyleSheet.create({
     textInput: {
         height: 60,
         width: 300,
-        //borderColor: 'gray',
         borderWidth: 1,
         borderRadius:7,
         margin: 5,
@@ -171,8 +184,8 @@ const styles = StyleSheet.create({
     textButton:{
         padding:20,
         fontSize: 15,
-        color: "#ffff",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     },
     title:{
         fontSize: 25,
@@ -182,15 +195,13 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
         color: 'white'
-        //marginLeft: -90
-        //display: "flex",
-        //flexDirection: "row",
-        //justifyContent: "flex-start",
-        //alignItems: "center",
     },
     MainContainer:{
         display: "flex",
         flexDirection:"column",
-        justifyContent: "center",
+        justifyContent: "center"
+    },
+    error_msg:{
+        color: "#FF4D4D"
     }
 });
