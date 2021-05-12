@@ -7,6 +7,27 @@ const AuthContext = React.createContext();
 // @ts-ignore
 const Theme_Web = React.createContext()
 
+const teachers = [
+    "Гусев Дмитрий Анатольевич",
+    "Горичный Алексей Дмитриевич",
+    "Гошокова Марина Анатольевна",
+    "Курагин Павель Валерьевич",
+    "Лукашков Никита Эдуардович",
+    "Макаров Георгий Андреевич",
+    "Поворин Денис Юрьевич",
+    "Романов Никита Андреевич",
+    "Ростоманов Антон Демидович",
+    "Сутулая Ирина Геннадьевна",
+    "Собакина Собака Собачкина",
+    "Тульский Анатолий Павлович",
+    "Фараонова Карина Валерьевна",
+    "Шаваранова Кристина Луканова",
+    "Шуршунова Екатерина Сергеевна",
+    "Шуха Марина Валентиновна",
+    "Яблочкин Михаил Валентинович",
+    "Япо Ольга Валерьевна"
+]
+
 const data = [
     "Б18-505",
     "Б18-565",
@@ -116,14 +137,11 @@ const light = StyleSheet.create({
 
 const themes = {light, dark}
 
-//@ts-ignore
 const ThemeType = React.createContext(themes.light)
 
 const SelectGroup: React.FC<any> = (props) => {
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
-    const renderOption = (title: string) => (
-        <SelectItem title={title} key={title}/>
+    const renderOption = (number: string) => (
+        <SelectItem title={number} key={number}/>
     );
     return(
         <Select  placeholder={"Группы"} onSelect={props.onSelect}
@@ -132,8 +150,29 @@ const SelectGroup: React.FC<any> = (props) => {
                          marginTop: 10
                      }}
                 status={"basic"}
-                 value={props.value} >
+                 value={props.value}
+        >
             {data.map(renderOption)}
+            {
+                //props.data.map(renderOption)
+            }
+        </Select>
+    )
+}
+
+const SelectTeacher : React.FC<any> = (props ) =>{
+    const renderOption = (number: string) => (
+        <SelectItem title={number} key={number}/>
+    );
+    return(
+        <Select placeholder={"Выберите научного руководителя"}
+                label={"Преподаватели"} onSelect={props.onSelect}
+                style={{
+                    width: 300
+                }}
+                status={"basic"}
+                value={props.value}>
+            {teachers.map(renderOption)}
         </Select>
     )
 }
@@ -151,8 +190,8 @@ const InputField: React.FC<any> = (props) =>{
         color: '#C0C0C0',
         border: 1
     })
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     let color: string = mainTheme.selectionColor.color.toString()
     return(
         <>
@@ -178,4 +217,4 @@ const InputField: React.FC<any> = (props) =>{
     )
 }
 
-export {InputField, AuthContext, Theme_Web, TitleHeader, ThemeType, themes, data, SelectGroup}
+export {InputField, AuthContext, Theme_Web, TitleHeader, ThemeType, themes, data, SelectGroup, teachers, SelectTeacher}

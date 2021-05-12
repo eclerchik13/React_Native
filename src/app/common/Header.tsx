@@ -27,12 +27,12 @@ const TextHeader: React.FC<Title> = (props ) => {
 }
 
 const Header: React.FC<any> = (props) => {
-    // @ts-ignore
-    const [theme, setTheme] = useContext(Theme_Web)
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
-    // @ts-ignore
-    const [isAuth, setAuth] = useContext(AuthContext)
+
+    const [theme, setTheme] = useContext<any>(Theme_Web)
+
+    const [mainTheme, setMainTheme] = useContext<any>(ThemeType)
+    //@ts-ignore
+    const [isAuth, setAuth] = useContext<any>(AuthContext)
     function ThemeChange(){
         if (theme == true){
             setTheme(false)
@@ -61,10 +61,10 @@ const Header: React.FC<any> = (props) => {
 }
 
 const MainHeader: React.FC<any> = (props) => {
-    // @ts-ignore
-    const [theme, setTheme] = useContext(Theme_Web)
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [theme, setTheme] = useContext<any>(Theme_Web)
+
+    const [mainTheme, setMainTheme] = useContext<any>(ThemeType)
 
     function ThemeChange(){
         if (theme == true){

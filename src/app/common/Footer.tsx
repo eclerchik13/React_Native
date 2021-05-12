@@ -4,8 +4,8 @@ import {ThemeType} from "./Components";
 
 const Footer: React.FC= () => {
     const year = new Date().getFullYear();
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
 
     return(
         <View style={styles.container}>

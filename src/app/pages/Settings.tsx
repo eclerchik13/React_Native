@@ -1,37 +1,139 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TextInput, SafeAreaView} from 'react-native';
 import Footer from "../common/Footer";
 import {Header}from "../common/Header";
 import {ThemeType} from "../common/Components"
 import {Button} from "react-native-material-ui";
 
-const Changes: React.FC = () => {
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+/*
+const TextInputs: React.FC<any> = (props) => {
+    const [mainTheme] = useContext<any>(ThemeType)
+    const [o, setO] = useState(props.oldPass)
     const [value, setValue] = useState({
-        oldPassword: "",
+        //oldPassword: "",
         newPassword:"",
         confirmPassword:'',
         showOld: false,
         showNew: false,
         showConfirm: false,
-        error:''
+        error:'',
+        color: "#FF4D4D"
     })
 
+    function putNewPassword(){
+        fetch('https://crudcrud.com/api/af0d1f36c67e4792afc20f94e52a2fb8/user_/60927a2d13120c03e81c9afb',{
+            method:"PUT",
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify({username: "Valeria",
+                password: value.newPassword,
+                role: true
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+    }
+
+    useEffect(()=>{
+
+    })
+}
+*/
+
+const Changes: React.FC = () => {
+    const [mainTheme] = useContext<any>(ThemeType)
+
+    const [value, setValue] = useState({
+        //oldPassword: "",
+        newPassword:"",
+        confirmPassword:'',
+        showOld: false,
+        showNew: false,
+        showConfirm: false,
+        error:'',
+        color: "#FF4D4D"
+    })
+
+    const [oldPas, setOldPas] = useState('')
+
+    /*
+    function AddUser(){
+        fetch('https://crudcrud.com/api/af0d1f36c67e4792afc20f94e52a2fb8/user_',{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify({username: "Valeria",
+                password: "13102000",
+                role: true
+                })
+        })
+            .then(response => response.json())
+            .then(data => {
+               console.log(data)
+            })
+    }*/
+
+
+    function ChooseUser(){
+        /*fetch('https://crudcrud.com/api/af0d1f36c67e4792afc20f94e52a2fb8/user_/60927a2d13120c03e81c9afb',{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json',
+            },
+        })
+            .then(response =>  response.json())
+            .then(data => {
+                setOldPas(data.password)
+            })*/
+        setOldPas('56789')
+    }
+
+    /*
+    function putNewPassword(){
+        fetch('https://crudcrud.com/api/af0d1f36c67e4792afc20f94e52a2fb8/user_/60927a2d13120c03e81c9afb',{
+            method:"PUT",
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify({username: "Valeria",
+                password: value.newPassword,
+                role: true
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+    }*/
+
+    useEffect(()=>{
+        ChooseUser()
+    },[])
+
     function ChangePassword(){
-        if (value.newPassword != value.confirmPassword){
-            setValue({...value, error: "Пароли не совпадают!"})
+        if (value.newPassword === value.confirmPassword){
+            setValue({...value, error: "Success!", color: "green"})
+
+           // putNewPassword()
+
+        }else{
+            setValue({...value, error: "Пароли не совпадают!", color: "#FF4D4D"})
         }
     }
+
     let color: string = mainTheme.selectionColor.color.toString()
-    //style={[styles.container, mainTheme.colorBackGroundContainerNew]
+
     return(
         <SafeAreaView style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
         <View style={[styles.containerSetting,mainTheme.colorContainerNew]}>
             <Text style={[styles.title, mainTheme.colorText]}>Изменение пароля</Text>
             <View style={[styles.cherta,mainTheme.colorCherta]}></View>
             <Text style={styles.shortInformation}>Старый пароль</Text>
-                    <TextInput value={"It's old password"}
+                    <TextInput value={oldPas}
                            style={{
                                borderColor: "gray",
                                height: 60,
@@ -59,7 +161,7 @@ const Changes: React.FC = () => {
                            textAlign={"center"}
                            clearButtonMode={"always"}
                            onChangeText={(e:string) =>(setValue({...value, newPassword: e}))}/>
-            <TextInput placeholder={"  Подтвердите новый пароль*"}
+            <TextInput placeholder={"Подтвердите новый пароль*"}
                        placeholderTextColor={mainTheme.placeholderColor.color}
                        style={{
                            borderColor: "gray",
@@ -74,20 +176,20 @@ const Changes: React.FC = () => {
                        }} selectionColor={color}
                        textAlign={"center"}
                        clearButtonMode={"always"}
-                       onChangeText={(e:string) =>(setValue({...value, newPassword: e}))}/>
+                       onChangeText={(e:string) =>(setValue({...value, confirmPassword: e}))}/>
             <View style={[styles.cherta,mainTheme.colorCherta]}/>
             <Button style={{container: [styles.button, mainTheme.colorButton],text: styles.textButton}}
                     text={"Отправить"} onPress={ChangePassword}/>
         </View>
-            <Text style={styles.error}>{value.error}</Text>
+            <Text style=
+                      {[{color: value.color},styles.error]}>{value.error}</Text>
         </SafeAreaView>
     )
 }
 
 const SettingPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <View style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <Header title={"Настройки"} titletwo={'Кафедра №42'} onpress={onpress}/>
@@ -161,7 +263,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     error:{
-        color: "#FF4D4D",
-        margin: 5
+        marginTop: 10
     }
 });

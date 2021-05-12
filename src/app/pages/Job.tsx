@@ -66,8 +66,8 @@ interface Vacancy {
 
 
 const Job: React.FC<Vacancy> = (props) => {
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <View style={[styles.containerNew, mainTheme.colorContainerNew]}>
             <Text style={[styles.title, mainTheme.colorText]}>{props.title}</Text>
@@ -80,8 +80,8 @@ const Job: React.FC<Vacancy> = (props) => {
 }
 
 const NewForm: React.FC = () => {
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <SafeAreaView style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <View>
@@ -96,8 +96,7 @@ const NewForm: React.FC = () => {
 }
 
 const JobPage: React.FC<any>= ({navigation}) =>{
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const [mainTheme] = useContext<any>(ThemeType)
     const onpress = () => { navigation.openDrawer()}
     return(
         <View style={[styles.container, mainTheme.colorBackGroundContainerNew]}>

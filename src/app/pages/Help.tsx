@@ -36,8 +36,8 @@ const Tel: React.FC = () => {
 }
 
 const Email:React.FC = () => {
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <View style={styles.marg}>
             <Text style={[styles.title_C,mainTheme.colorText]}>Почта</Text>
@@ -47,8 +47,8 @@ const Email:React.FC = () => {
 }
 
 const Telegram:React.FC = () => {
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     return (
         <View style={styles.marg3}>
             <Text style={[styles.title_C,mainTheme.colorText]}>Telegram</Text>
@@ -57,8 +57,8 @@ const Telegram:React.FC = () => {
     )
 }
 const Contact: React.FC = () => {
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     let colorIcon = mainTheme.colorIconHelp.color.toString()
     return (
         <View style={styles.container_C}>
@@ -79,8 +79,8 @@ const Contact: React.FC = () => {
 }
 
 const Help: React.FC = () => {
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <View style={[styles.Htext, mainTheme.colorHtext]}>
             <Text style={styles.title}>Вам нужна наша помощь?</Text>
@@ -90,8 +90,8 @@ const Help: React.FC = () => {
 }
 
 const HelpForm: React.FC = () => {
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <SafeAreaView style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <View>
@@ -105,8 +105,8 @@ const HelpForm: React.FC = () => {
 
 const HelpPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <View style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <Header title={"Поддержка"} titletwo={'Кафедра №42'} onpress={onpress}/>

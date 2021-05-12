@@ -53,8 +53,7 @@ interface Time{
 }
 
 const ITime: React.FC<Time> = (props) =>{
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const [mainTheme] = useContext<any>(ThemeType)
     let stringColor = mainTheme.colorIconTime.color.toString()
     return(
         <View style={styles.time}>
@@ -65,8 +64,7 @@ const ITime: React.FC<Time> = (props) =>{
 }
 
 const New: React.FC<Article> = (props) => {
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <View style={[styles.containerNew, mainTheme.colorContainerNew]}>
             <View style={[styles.cherta,mainTheme.colorCherta]}>
@@ -97,8 +95,7 @@ const NewForm: React.FC = () => {
 
 const NewPage: React.FC<any>= ({navigation}) =>{
     const onpress = () => { navigation.openDrawer()}
-    //  @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const [mainTheme] = useContext<any>(ThemeType)
     return(
         <View style={[styles.container, mainTheme.colorBackGroundContainerNew]}>
             <Header title={"Новости"} titletwo={'Кафедра №42'} onpress={onpress}/>

@@ -11,18 +11,35 @@ interface IUser {
 }
 
 const AuthForm: React.FC= () => {
-
-    // @ts-ignore
+    // @ts-ignore  need!!!
     const [isAuth, setAuth] = useContext(AuthContext)
-    // @ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
 
     const [msg, setMsg] = useState("")
-
     const [log, setLog] = useState<IUser>({
         username: '',
         password: ''
     })
+
+/*
+    function AddFetch(){
+        fetch('https://crudcrud.com/api/594ff9d1bd7349069adc15fa5b2fb1ce/groups_',{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    "groups":[
+                        {'number': "Б18-505"},
+                        {'number': "Б18-565"}
+                    ]
+                }
+        )}).then(response => response.json())
+            .then((data => (data.groups)))
+    }*/
+
     function CreateUser() {
         if (log.password === '' || log.username === ''){
             setMsg("You must fill all fields!")
@@ -55,9 +72,9 @@ const AuthForm: React.FC= () => {
                 <View style={styles.paper}>
                     <Image style={styles.picture} source={require("../images/logo.png")} />
                     <Text style={[styles.title, mainTheme.colorText]}>Авторизация</Text>
-                    <InputField argument={"  Username*"} pas={false}
+                    <InputField argument={"Username*"} pas={false}
                                 onChangeText={(e:string) =>(setLog({...log, username: e}))}/>
-                    <InputField argument={"  Password*"} pas={true}
+                    <InputField argument={"Password*"} pas={true}
                                 onChangeText={(e:string) =>(setLog({...log, password: e}))}/>
                         <Button style={{container: [styles.button, mainTheme.colorButton],text: styles.textButton}} onPress={CreateUser}
                                 text={"Войти"}/>
@@ -69,8 +86,8 @@ const AuthForm: React.FC= () => {
 }
 
 const AuthPage: React.FC<any> = ({navigation}) =>{
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+
+    const [mainTheme] = useContext<any>(ThemeType)
     const onpress = () => { navigation.navigate("Регистрация")}
     return(
         <View style={[styles.container, mainTheme.backGroundColorPage]}>

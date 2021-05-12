@@ -30,22 +30,39 @@ const RegForm: React.FC= ({}) => {
         role: false,
         group:""
     })
-    // @ts-ignore
+
+    // @ts-ignore  need!!!
     const [isAuth, setAuth] = useContext(AuthContext)
 
-    //@ts-ignore
-    const [mainTheme, setMainTheme] = useContext(ThemeType)
+    const [mainTheme] = useContext<any>(ThemeType)
     const [Group, setGroup] = useState('')
     const [isStudent, setStudent] = useState(false)
     const [msg, setMsg] = useState("")
 
-    //@ts-ignore
-    const NotStudent:React.FC = () => {
+    const NotStudent:() => void = () => {
        setStudent(!isStudent)
         if (isStudent){
             setGroup('')
         }
     }
+
+    /*
+    function GetGroups(){
+        fetch('https://crudcrud.com/api/594ff9d1bd7349069adc15fa5b2fb1ce/groups_/6092674113120c03e81c9af3',{
+            method: 'GET',
+            headers:{
+                "Content-Type":"application-json",
+            }
+        }).then((response => response.json()))
+            .then(data => {
+                setGroups(data.groups)
+               //console.log(data.groups)
+            })
+    }
+
+    useEffect(()=>{
+        GetGroups()
+    },[])*/
 
 function CreateUser() {
         if( registration.email === '' ||
@@ -100,13 +117,13 @@ let color: string= mainTheme.colorForCheckBox.color
         <SafeAreaView  >
             <View style={[styles.container,mainTheme.backGroundColorPage]}>
                 <Text style={[styles.title, mainTheme.colorText]}>Регистрация</Text>
-                <InputField argument={"  Username*"} pas={false}
+                <InputField argument={"Username*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, username: e}))}/>
-                <InputField argument={"  Фамилия*"} pas={false}
+                <InputField argument={"Фамилия*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, secondName: e}))}/>
-                <InputField argument={"  Имя*"} pas={false}
+                <InputField argument={"Имя*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, name: e}))}/>
-                <InputField argument={"  Отчество*"} pas={false}
+                <InputField argument={"Отчество*"} pas={false}
                             onChangeText={(e: string) =>(setRegister({...registration, thirdName: e}))}/>
 
                 <View style={styles.containerChoose}>
